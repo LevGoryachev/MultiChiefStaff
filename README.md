@@ -1,6 +1,6 @@
 # MultiChiefStaff
 <p><b>MultiChief</b> is an experimental microservice-based ERP system for construction industry (on-line and off-line interaction between departments and employees). <p/>
-<p><b>MultiChiefStaff</b> is a microservice that is responsible for preparing data (DTO) for MultiChiefMain (main service <a href="https://github.com/LevGoryachev/MultiChiefMain">MultiChiefMain</a>).</p> 
+<p><b>MultiChiefStaff</b> is a microservice that is responsible for preparing data (DTO) for orchestrators (modules of <a href="https://github.com/LevGoryachev/MultiChiefMain">MultiChiefMain</a>).</p> 
 <p><b>Summary: Java 11, Spring-Boot, Spring Security, Spring Data JPA (Hibernate)</b></p>
 <p><b>Database: PostgreSQL</b></p>
 
@@ -17,7 +17,7 @@
 <p>Descriptions:</p>
 
 <ul>
-<li>address - denormalized table because of dificulties with bringing to the standard between different countries</li>
+<li>employee - denormalized table because of dificulties with bringing to the standard between different countries</li>
 <li>app_user_external_id - to connect with security service (if app_user_external_id not null - the employee has credentials to APP access)</li>
 <li>labour_contract_external_id - to connect with document flow service (the employee should have a labour contract)</li>
 <li>required_qty - quantity of required vacancies</li>
