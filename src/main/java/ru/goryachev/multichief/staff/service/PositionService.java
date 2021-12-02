@@ -1,7 +1,11 @@
 package ru.goryachev.multichief.staff.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
+import ru.goryachev.multichief.staff.exception.MultiChiefEmptyListException;
+import ru.goryachev.multichief.staff.exception.MultiChiefObjectNotFoundException;
 import ru.goryachev.multichief.staff.model.Position;
 import ru.goryachev.multichief.staff.repository.PositionRepository;
 
@@ -14,8 +18,11 @@ import java.util.List;
  */
 
 @Service
+@PropertySource("classpath:service_layer.properties")
 public class PositionService {
 
+    @Value("${model.entity.alias.position}")
+    private String positionEntityAlias;
 
     private PositionRepository positionRepository;
 
@@ -24,23 +31,23 @@ public class PositionService {
         this.positionRepository = positionRepository;
     }
 
-    public List<Position> getAll(String posName) throws EmptyListException {
+    public List<Position> getAll(String posName) throws MultiChiefEmptyListException {
         if (posName == null) {
             List<Position> allPositions = positionRepository.findAll();
             if (allPositions.isEmpty()) {
-                throw new EmptyListException();
+                throw new MultiChiefEmptyListException(positionEntityAlias);
             }
             return allPositions;
         }
-        List<Position> allPositions = positionRepository.findAllByLastName(posName);
+        List<Position> allPositions = positionRepository.findAllByPosName(posName);
         if (allPositions.isEmpty()) {
-            throw new EmptyListException();
+            throw new MultiChiefEmptyListException(positionEntityAlias);
         }
         return allPositions;
     }
 
-    public Position getById(Long id) throws EntityNotFoundException {
-        Position position = positionRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id));
+    public Position getById(Long id) throws MultiChiefObjectNotFoundException {
+        Position position = positionRepository.findById(id).orElseThrow(() -> new MultiChiefObjectNotFoundException(positionEntityAlias, id));
         return position;
     }
 
