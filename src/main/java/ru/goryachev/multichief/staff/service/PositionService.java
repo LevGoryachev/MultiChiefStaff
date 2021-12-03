@@ -9,12 +9,14 @@ import ru.goryachev.multichief.staff.exception.MultiChiefObjectNotFoundException
 import ru.goryachev.multichief.staff.model.Position;
 import ru.goryachev.multichief.staff.repository.PositionRepository;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * PositionService works with types: Position, PositionDTO.
  * @author Lev Goryachev
- * @version 3
+ * @version 1.1
  */
 
 @Service
@@ -59,7 +61,10 @@ public class PositionService {
         return positionRepository.save(modifiedPosition);
     }
 
-    public void delete(Long id) {
+    public Map<String, Object> delete (Long id) {
         positionRepository.deleteById(id);
+        Map<String, Object> responseBody = new LinkedHashMap<>();
+        responseBody.put("result", positionEntityAlias + " " + "with id" + " " + id + " " + "was deleted");
+        return responseBody;
     }
 }

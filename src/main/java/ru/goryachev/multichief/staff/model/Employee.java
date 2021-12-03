@@ -31,7 +31,7 @@ public class Employee {
 
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "position_id", insertable = false, updatable = false)
-    @JsonIgnoreProperties(value = { "addresses" ,"hibernateLazyInitializer", "handler" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "employees" ,"hibernateLazyInitializer", "handler" }, allowSetters = true)
     private Position position;
 
     @Column(name = "position_id")

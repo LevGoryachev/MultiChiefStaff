@@ -1,5 +1,6 @@
 package ru.goryachev.multichief.staff.service;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -9,16 +10,19 @@ import ru.goryachev.multichief.staff.exception.MultiChiefObjectNotFoundException
 import ru.goryachev.multichief.staff.model.Employee;
 import ru.goryachev.multichief.staff.repository.EmployeeRepository;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * EmployeeService works with types: Employee, EmployeeDTO.
  * @author Lev Goryachev
- * @version 3
+ * @version 1.1
  */
 
 @Service
 @PropertySource("classpath:service_layer.properties")
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class EmployeeService {
 
     @Value("${model.entity.alias.employee}")
@@ -59,7 +63,10 @@ public class EmployeeService {
         return employeeRepository.save(modifiedEmployee);
     }
 
-    public void delete(Long id) {
+    public Map<String, Object> delete (Long id) {
         employeeRepository.deleteById(id);
+        Map<String, Object> responseBody = new LinkedHashMap<>();
+        responseBody.put("result", employeeEntityAlias + " " + "with id" + " " + id + " " + "was deleted");
+        return responseBody;
     }
 }
